@@ -14,8 +14,8 @@ The app is live here:
 * [How to use the app](#how-to-use-the-app)
 * [Tests](#tests)
 * [How to run tests](#how-to-run-tests)
-* [Code dependencies](#code-dependencies)
 * [How to get the project locally](#How-to-get-the-project-locally)
+* [Code dependencies](#code-dependencies)
 * [Contributing](#contributing)
 
 
@@ -42,6 +42,13 @@ Whether you want to run tests online or from your local machine, you can do so b
 ![all tests passing](img/screenshot.png)
 
 
+## How to get the project locally
+
+You can download the whole project using the `Download` button above. or clone it using the command:
+```
+git clone https://github.com/i-mw/feedreader
+```
+
 ## Code Dependencies
 
 This project has various code dependencies and they are:
@@ -61,14 +68,6 @@ This project has various code dependencies and they are:
 - Google API: loads Feedreader API.
 
 - Feeds from Udacity, Css Tricks, HTML5 Rocks and Linear Digressions.
-
-
-## How to get the project locally
-
-You can download the whole project using the `Download` button above. or clone it using the command:
-```
-git clone https://github.com/i-mw/feedreader
-```
 
 
 ## Contributing
