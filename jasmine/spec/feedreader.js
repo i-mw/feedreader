@@ -80,8 +80,7 @@ $(function() {
          * hiding/showing of the menu element.
          */
         it('should be hidden by default', function() {
-            menuLeft = Number(menu.css('transform').split(',')[4]);  
-            expect(menuLeft).toBeLessThan(0);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
 
@@ -90,20 +89,12 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-        it('should toggle visibility on click',function(done) {
-            $('body').toggleClass('menu-hidden');
-            menu.one('transitionend', function() {
-                menuLeft = Number(menu.css('transform').split(',')[4]);
-                expect(menuLeft).toBe(0);
+        it('should toggle visibility on click',function() {
+            $('.menu-icon-link').trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
-                $('body').toggleClass('menu-hidden');
-                menu.one('transitionend', function() {
-                    menuLeft = Number(menu.css('transform').split(',')[4]);
-                    expect(menuLeft).toBeLessThan(0);
-                    done();
-                });
-            });
- 
+            $('.menu-icon-link').trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(true); 
         });
     });
 
@@ -123,7 +114,7 @@ $(function() {
         });
 
         it('should be at least one', function(done) {
-            expect($('.feed')[0].childElementCount).toBeGreaterThan(0);
+            expect($('.feed .entry').length).toBeGreaterThan(0);
             done();
         });
     });
@@ -135,41 +126,21 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        let prevTitle,
-            prevFirstEntry,
-            nextTitle,
-            nextFirstEntry;
+        let oldFeed,
+            newFeed;
 
-        /* make a new request to default feed, wait fot it to finish
-         * and then capture its header title and first element content.
-         */
         beforeEach(function(done) {
             loadFeed(0, function() {
-                done();
+                oldFeed = $('.feed').html();
+                loadFeed(1, function() {
+                    newFeed = $('.feed').html();
+                    done();
+                });
             });
         });
 
-        /* capture header title & first element content
-         * then make another request to the second feed
-         */
-        beforeEach(function(done) {
-            prevTitle = $('.header-title')[0].innerText;
-            prevFirstEntry = $('.entry-link:first-child h2')[0].innerText;
-
-            loadFeed(1, function() {
-                done();
-            });
-        });
-
-        /* capture second feed header title & first entry content
-         * then compare
-         */
         it('should change content', function(done) {
-            nextTitle = $('.header-title')[0].innerText;
-            nextFirstEntry = $('.entry-link:first-child h2')[0].innerText;
-
-            expect(nextTitle).not.toBe(prevTitle);
-            expect(nextFirstEntry).not.toBe(prevFirstEntry);
+            expect(newFeed).not.toBe(oldFeed);
             done();
         });
     });
