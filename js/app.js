@@ -7,6 +7,7 @@
  */
 
 // The names and URLs to all of the feeds we'd like available.
+// Protected and not directly accessed at any part of the enviroment
 var allFeedsProtected = [
     {
         name: 'Udacity Blog',
@@ -23,6 +24,7 @@ var allFeedsProtected = [
     }
 ];
 
+// Handles requests to the proxy. used mainly to throw and handle errors
 let handler = {
     get: function(target, prop, recev) {
         if(typeof target[prop] === 'object' && target[prop] != null) {
@@ -41,6 +43,7 @@ let handler = {
     }
 };
 
+// Proxy to handle access to allFeeds
 let allFeeds = new Proxy(allFeedsProtected, handler);
 
 /* This function starts up our application. The Google Feed
