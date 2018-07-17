@@ -7,7 +7,7 @@
  */
 
 // The names and URLs to all of the feeds we'd like available.
-var allFeeds = [
+var allFeedsProtected = [
     {
         name: 'Udacity Blog',
         url: 'http://blog.udacity.com/feed'
@@ -22,6 +22,26 @@ var allFeeds = [
         url: 'http://feeds.feedburner.com/udacity-linear-digressions'
     }
 ];
+
+let handler = {
+    get: function(target, prop, recev) {
+        if(typeof target[prop] === 'object' && target[prop] != null) {
+            return new Proxy(target[prop], handler);
+        }
+        else if (target[prop] === undefined){
+            throw `error: ${typeof recev}['${prop}'] is not defined`;
+        }
+        else {
+            return target[prop];
+        }
+    },
+    set: function(target, prop, value){
+        target[prop] = value;
+        return true;
+    }
+};
+
+let allFeeds = new Proxy(allFeedsProtected, handler);
 
 /* This function starts up our application. The Google Feed
  * Reader API is loaded asynchonously and will then call this
@@ -105,12 +125,11 @@ $(function() {
      * above using Handlebars) and append it to the list of all
      * available feeds within the menu.
      */
-    allFeeds.forEach(function(feed) {
-        feed.id = feedId;
-        feedList.append(feedItemTemplate(feed));
-
+    for(let i=0; i<allFeeds.length; i++) {
+        allFeeds[i].id = feedId;
+        feedList.append(feedItemTemplate(allFeeds[i]));
         feedId++;
-    });
+    }
 
     /* When a link in our feedList is clicked on, we want to hide
      * the menu, load the feed, and prevent the default action

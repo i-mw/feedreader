@@ -32,10 +32,10 @@ $(function() {
          * and that the URL is not empty.
          */
         it('have URLs', function() {
-            allFeeds.forEach(function(ele){
-                expect(ele.url).toBeDefined();
-                expect(ele.url.length).not.toBe(0);
-            });
+            for(let i=0; i<allFeeds.length; i++) {
+                expect(allFeeds[i].url).toBeDefined();
+                expect(allFeeds[i].url.length).not.toBe(0);
+            }
         });
 
         /* TODO: Write a test that loops through each feed
@@ -43,20 +43,28 @@ $(function() {
          * and that the name is not empty.
          */
         it('have names', function() {
-            allFeeds.forEach(function(ele) {
-                expect(ele.name).toBeDefined();
-                expect(ele.name.length).not.toBe(0);
-            });
+            for(let i=0; i<allFeeds.length; i++) {
+                expect(allFeeds[i].name).toBeDefined();
+                expect(allFeeds[i].name.length).not.toBe(0);
+            }
         });
 
         /* Error handling for undefined variables
          * and out-of-bound arrays.
          */
-        it('should throw an error on out-of-bound access', function() {
-            expect(allFeeds['accessing using a string']).toThrowError();
-            expect(allFeeds[allFeeds.length]).toThrowError();
-            expect(allFeeds[-1]).toThrowError();
-            expect(loadFeed(allFeeds.length)).toThrowError();
+        it('should throw an error for undefined access', function() {
+            expect(function() {
+                allFeeds['accessing using a string'];
+            }).toThrow('error: object[\'accessing using a string\'] is not defined');
+            expect(function() {
+                allFeeds[allFeeds.length];
+            }).toThrow('error: object[\'4\'] is not defined');
+            expect(function() {
+                allFeeds[-1];
+            }).toThrow('error: object[\'-1\'] is not defined');
+            expect(function() {
+                loadFeed(allFeeds.length);
+            }).toThrow('error: object[\'4\'] is not defined');
         });
     });
 
