@@ -4,7 +4,7 @@ Feedreader-Jasmine-Testing
 
 Feedreader is one of Udacity front-end nanodegree projects. The project focuses on writing and running comprehensive tests against the Feedreader app. The test suites got to cover the whole aspects of the app including ,but not only, the asynchronous functionality.
 The app is live here: 
-`https://i-mw.github.io/feedreader`.
+https://i-mw.github.io/feedreader.
 
 ![project main page](img/screen2.png)
 
@@ -48,6 +48,7 @@ You can download the whole project using the `Download` button above. or clone i
 ```
 git clone https://github.com/i-mw/feedreader
 ```
+
 
 ## Code Dependencies
 
