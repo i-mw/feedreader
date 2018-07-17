@@ -48,6 +48,16 @@ $(function() {
                 expect(ele.name.length).not.toBe(0);
             });
         });
+
+        /* Error handling for undefined variables
+         * and out-of-bound arrays.
+         */
+        it('should throw an error on out-of-bound access', function() {
+            expect(allFeeds['accessing using a string']).toThrowError();
+            expect(allFeeds[allFeeds.length]).toThrowError();
+            expect(allFeeds[-1]).toThrowError();
+            expect(loadFeed(allFeeds.length)).toThrowError();
+        });
     });
 
 
